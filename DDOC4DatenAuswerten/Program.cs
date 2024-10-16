@@ -52,16 +52,11 @@ namespace DDOC4DatenAuswerten
             }
             writer.WriteLine(sb.ToString());
         }
-        
+
         private static void ArrayAusgeben(TextWriter writer, Value[] data)
         {
-            StringBuilder sb = new();
-            foreach (var item in data)
-            {
-                sb.Append(item.Wert);
-                sb.Append(' ');
-            }
-            writer.WriteLine(sb.ToString());
+            double[] dData = data.Select(v => v.Wert).ToArray();
+            ArrayAusgeben(writer, dData);
         }
 
 
@@ -108,11 +103,7 @@ namespace DDOC4DatenAuswerten
         
         private static Statistik StatistikBerechnen(Value[] data)
         {
-            double[] dData = new double[data.Length];
-            for (int i = 0; i < data.Length; i++)
-            {
-                dData[i] = data[i].Wert;
-            }
+            double[] dData = data.Select(v => v.Wert).ToArray();
             return StatistikBerechnen(dData);
         }
 
@@ -128,7 +119,6 @@ namespace DDOC4DatenAuswerten
             Minimum = minimum;
             Maximum = maximum;
             Mittelwert = mittelwert;
-
         }
 
         public DateTime Datum { get; set; }
@@ -140,7 +130,7 @@ namespace DDOC4DatenAuswerten
         public override string ToString()
         {
             return $"Datum: {Datum.ToShortDateString(),-12}   " +
-                   $"Anzahl: {Anzahl,-8:N0}   " +
+                   $"Anzahl: {Anzahl,-10:N0}   " +
                    $"Minimum: {Minimum,-10:N2}   " +
                    $"Maximum: {Maximum,-10:N2}   " +
                    $"Mittelwert: {Mittelwert,-10:N2}";
@@ -164,7 +154,7 @@ namespace DDOC4DatenAuswerten
         public override string ToString()
         {
             return $"SensorId: {SensorId,10} " +
-                   $"Wert: {Wert,14:N2} " +
+                   $"Wert: {Wert,10:N2} " +
                    $"Timestamp: {Timestamp}";
         }
     }
